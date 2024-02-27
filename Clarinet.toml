@@ -5,8 +5,8 @@ authors = []
 telemetry = true
 cache_dir = './.cache'
 requirements = []
-[contracts.buyOrbital]
-path = 'contracts/buyOrbital.clar'
+[contracts.keros]
+path = 'contracts/keros.clar'
 clarity_version = 2
 epoch = 2.4
 
