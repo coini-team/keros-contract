@@ -1,91 +1,77 @@
-;; ;; Contract name: deploy-fungible-token
+;; ;; Contract name: keros.clar
 ;; ;; Token name: keros
 ;; ;; Token symbol: KER
 
-(define-data-var token-owner principal tx-sender) ;; token woner
-(define-data-var buy-date uint u0) ;; Token deploy date
-(define-data-var price uint u100) ;; price on microSTX
-(define-constant symbol "KER") ;; token symbol
-(define-fungible-token keros) ;; token name
-(define-constant ERR_FT_TRANSFER_AMOUNT (err u100)) ;; transfer error
-(define-constant ERR_FT_DEPLOY (err u101)) ;; deploy error
-(define-constant ERR_TIME_BLOCK (err u102)) ;; block time error
-(define-constant ERR_FT_DEPLOY_AMOAUNT (err u103)) ;; transfer error
-(define-constant ERR_FT_TRANSFER (err u104)) ;; transfer error
-(define-constant ERR_SET_LAPS_TIME (err u105)) ;; transfer error 
-(define-constant ERR_SET_NEW_PRICE (err u106)) ;; transfer error 
+(impl-trait 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.sip-010-trait)
 
-(define-private (get-buy-date)
-  (let ((block-time (get-block-info? time u0))) ;; u0 is the today block
-    (if (is-some block-time)
-      (ok (some block-time)) ;; return date & time in UNIX format
-      ERR_TIME_BLOCK
+(define-constant contract-owner tx-sender)
+(define-constant token-owner tx-sender)
+(define-constant price u1000000)
+
+(define-constant ERR_OWNER_ONLY (err u100))
+(define-constant ERR_NOT_TOKEN_OWNER (err u101))
+(define-constant ERR_TOKEN_MINT (err u102))
+(define-constant ERR_SANDER_IS_RECIPIENT (err u103))
+(define-constant ERR_INSUFFICIENT_BALANCE (err u104))
+(define-constant ERR_MINT_AMOUNT (err u105))
+(define-constant ERR_INSUFFICIENT_STX (err u106))
+
+(define-fungible-token keros)
+
+(define-public (transfer (amount uint) (sender principal) (recipient principal) (memo (optional (buff 34))))
+    (begin
+        (asserts! (is-eq tx-sender sender) ERR_NOT_TOKEN_OWNER)
+        (asserts! (not (is-eq tx-sender recipient)) ERR_SANDER_IS_RECIPIENT)
+        (asserts! (<= amount (ft-get-balance keros sender)) ERR_INSUFFICIENT_BALANCE)
+        (try! (ft-transfer? keros amount sender recipient))
+        (match memo to-print (print to-print) 0x)
+        (ok true)
     )
-  )
 )
 
-;; function to mint a token
-(define-public (mint-tokens (amount uint) (recipient principal))
-  (begin
-    ;; check that the amount is not 0
-    ;; the recipient is the same as the sender
-    (asserts! (and (> amount u0) (is-eq recipient tx-sender)) ERR_FT_DEPLOY_AMOAUNT)
-    ;; mint the tokens and send them to the recipient
-    (unwrap! (ft-mint? keros amount recipient) ERR_FT_DEPLOY)
-    ;; set a token owner 
-    (var-set token-owner tx-sender)
-    ;; Success message
-    (ok "Success")
-  )
+(define-read-only (get-name)
+    (ok "keros")
 )
 
-(define-public (buy-token (amount uint))
-  (begin
-    ;; calculate the total cost in microSTX
-    (let ((cost (* amount (var-get price))))
-      ;; check that the sender has enough STX to pay
-      (asserts! (>= (stx-get-balance tx-sender) cost) ERR_FT_TRANSFER_AMOUNT)
-      ;; transfer the STX from the sender to the token owner
-      (try! (stx-transfer? cost tx-sender (var-get token-owner)))
-      ;; mint the tokens and send them to the sender
-      (unwrap! (ft-mint? keros amount tx-sender) ERR_FT_DEPLOY)
-      ;;Set deploy data
-      (var-set buy-date (unwrap! (unwrap! (unwrap! (get-buy-date) ERR_TIME_BLOCK ) ERR_TIME_BLOCK ) ERR_TIME_BLOCK ))
-      ;; success message
-      (ok "Success")
-    )
-  )
+(define-read-only (get-symbol)
+    (ok "KRS")
 )
 
-;; function to get the current price of the token
-(define-read-only (get-price)
-  (let ((block-time (get-block-info? time u0))) ;; u0 is the current block
-    (if (is-some block-time)
-      (let ((deploy-time (var-get buy-date))) ;; get the deploy date
-        (let ((elapsed-time (- (unwrap! block-time ERR_SET_LAPS_TIME) deploy-time))) ;; calculate the elapsed time in seconds
-          (let ((elapsed-months (- (/ elapsed-time (* u30 u24 u60 u60)) (mod (/ elapsed-time (* u30 u24 u60 u60)) u1))));; calculate the elapsed months
-            (let ((increase-rate (+ u1 (/ (* u5 elapsed-months) u10000)))) ;; calculate the increase rate
-              (ok (* (var-get price) increase-rate)) ;; return the current price
-            )
-          )
-        )
-      )
-      ERR_SET_NEW_PRICE
-    )
-  )
+(define-read-only (get-decimals)
+    (ok u6)
 )
 
-;; function to update the price of the token
-(define-private (update-price)
-  (begin
-    ;; check that the sender is the token owner
-    (asserts! (is-eq tx-sender (var-get token-owner)) ERR_FT_TRANSFER)
-    ;; get the current price
-    (let ((current-price (unwrap! (get-price) ERR_TIME_BLOCK)))
-      ;; set the price to the current price
-      (var-set price current-price)
-      ;; success message
-      (ok "Success")
+(define-read-only (get-balance (who principal))
+    (ok (ft-get-balance keros who))
+)
+
+(define-read-only (get-total-supply)
+    (ok (ft-get-supply keros))
+)
+
+
+(define-read-only (get-token-uri)
+    (ok none)
+)
+
+
+(define-public (mint (amount uint) (recipient principal))
+    (begin
+        (asserts! (is-eq tx-sender contract-owner) ERR_OWNER_ONLY)
+        (asserts! (is-eq tx-sender recipient) ERR_OWNER_ONLY)
+        (asserts! (<= amount u1) ERR_MINT_AMOUNT)
+        (try! (ft-mint? keros amount recipient))
+        (ok "Mint Succeful")
     )
-  )
+)
+
+(define-public (buy-token (amount uint) (recipient principal))
+    (begin
+        (asserts! (not (is-eq tx-sender recipient)) ERR_SANDER_IS_RECIPIENT)
+        (asserts! (<= amount (ft-get-balance keros token-owner)) ERR_INSUFFICIENT_BALANCE)
+        (asserts! (>= (stx-get-balance recipient) (* amount price)) ERR_INSUFFICIENT_STX)
+        (try! (ft-transfer? keros amount token-owner recipient))
+        (try! (stx-transfer? (* amount price) recipient token-owner))
+        (ok "Succesfull Transaction")
+    )
 )
