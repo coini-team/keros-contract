@@ -10,20 +10,20 @@ plan:
       transactions:
         - requirement-publish:
             contract-id: SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard
-            remap-sender: ST3DPBBSE0B04WWBXXF8TNBRPDW72084WYXGEZERB
+            remap-sender: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
             remap-principals:
-              SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE: ST3DPBBSE0B04WWBXXF8TNBRPDW72084WYXGEZERB
+              SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
             cost: 8400
-            path: "./.cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar"
+            path: ".cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar"
             clarity-version: 1
       epoch: "2.0"
     - id: 1
       transactions:
         - contract-publish:
-            contract-name: keros
-            expected-sender: ST3DPBBSE0B04WWBXXF8TNBRPDW72084WYXGEZERB
-            cost: 1773415209
-            path: contracts/keros.clar
+            contract-name: NFTFactory
+            expected-sender: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
+            cost: 11193147
+            path: contracts/NFTFactory.clar
             anchor-block-only: true
-            clarity-version: 2
-      epoch: "2.4"
+            clarity-version: 1
+      epoch: "2.05"
