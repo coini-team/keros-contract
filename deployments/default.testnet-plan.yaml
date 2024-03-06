@@ -20,10 +20,10 @@ plan:
     - id: 1
       transactions:
         - contract-publish:
-            contract-name: keros
+            contract-name: TokenFactory
             expected-sender: ST3DPBBSE0B04WWBXXF8TNBRPDW72084WYXGEZERB
             cost: 1773415209
-            path: contracts/keros.clar
+            path: contracts/factory/TokenFactory.clar
             anchor-block-only: true
             clarity-version: 2
       epoch: "2.4"
