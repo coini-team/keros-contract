@@ -22,7 +22,7 @@ plan:
         - contract-publish:
             contract-name: TokenFactory
             expected-sender: ST3DPBBSE0B04WWBXXF8TNBRPDW72084WYXGEZERB
-            cost: 1773415209
+            cost: 3737663
             path: contracts/factory/TokenFactory.clar
             anchor-block-only: true
             clarity-version: 2
