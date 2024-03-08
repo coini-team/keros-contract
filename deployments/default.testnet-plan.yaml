@@ -20,10 +20,10 @@ plan:
     - id: 1
       transactions:
         - contract-publish:
-            contract-name: TokenFactory
+            contract-name: fungibletoken
             expected-sender: ST3DPBBSE0B04WWBXXF8TNBRPDW72084WYXGEZERB
-            cost: 3737663
-            path: contracts/factory/TokenFactory.clar
+            cost: 15425064
+            path: contracts/base/fungibletoken.clar
             anchor-block-only: true
             clarity-version: 2
       epoch: "2.4"

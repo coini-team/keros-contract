@@ -20,7 +20,7 @@
 
 (define-public (transfer (amount uint) (sender principal) (recipient principal) (memo (optional (buff 34))))
     (begin
-        (asserts! (is-eq tx-sender sender) ERR_NOT_TOKEN_OWNER)
+        (asserts! (is-eq tx-sender sender) ERR_OWNER_ONLY)
         (asserts! (not (is-eq tx-sender recipient)) ERR_SANDER_IS_RECIPIENT)
         (asserts! (<= amount (ft-get-balance keros sender)) ERR_INSUFFICIENT_BALANCE)
         (try! (ft-transfer? keros amount sender recipient))
@@ -57,9 +57,9 @@
 
 (define-public (mint (amount uint) (recipient principal))
     (begin
-        (asserts! (is-eq tx-sender contract-owner) ERR_OWNER_ONLY)
-        (asserts! (is-eq tx-sender recipient) ERR_OWNER_ONLY)
-        (asserts! (<= amount u1) ERR_MINT_AMOUNT)
+        ;; (asserts! (not (is-eq tx-sender contract-owner)) ERR_OWNER_ONLY)
+        (asserts! (not (is-eq tx-sender recipient)) ERR_OWNER_ONLY)
+        (asserts! (>= amount u1) ERR_MINT_AMOUNT)
         (try! (ft-mint? keros amount recipient))
         (ok "Mint Succeful")
     )
