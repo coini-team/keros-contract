@@ -5,10 +5,12 @@ description = ""
 telemetry = true
 
 [[project.requirements]]
-contract_id = "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard"
-[contracts.NFTFactory]
-path = "contracts/factory/NFTFactory.clar"
-depends_on = []
+contract_id = 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard'
+[contracts.fungibletoken]
+path = 'contracts/base/fungibletoken.clar'
+clarity_version = 2
+epoch = 2.4
+
 
 [repl]
 costs_version = 2
