@@ -9,21 +9,21 @@ plan:
     - id: 0
       transactions:
         - requirement-publish:
-            contract-id: SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard
+            contract-id: SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
             remap-sender: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
             remap-principals:
-              SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
-            cost: 8400
-            path: ".cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar"
+              SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
+            cost: 4680
+            path: ".cache/requirements/SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait.clar"
             clarity-version: 1
       epoch: "2.0"
     - id: 1
       transactions:
         - contract-publish:
-            contract-name: NFTFactory
+            contract-name: TokenFungible
             expected-sender: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
-            cost: 11193147
-            path: contracts/NFTFactory.clar
+            cost: 30259678
+            path: contracts/base/TokenFungible.clar
             anchor-block-only: true
-            clarity-version: 1
-      epoch: "2.05"
+            clarity-version: 2
+      epoch: "2.4"
