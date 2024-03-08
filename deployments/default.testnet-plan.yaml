@@ -20,11 +20,10 @@ plan:
     - id: 1
       transactions:
         - contract-publish:
-            contract-name: fungibletoken
-            expected-sender: ST3DPBBSE0B04WWBXXF8TNBRPDW72084WYXGEZERB
-            cost: 15425064
-            path: contracts/base/fungibletoken.clar
-
+            contract-name: TokenFungible
+            expected-sender: STJ3BSDKGMMQF6DJK80XRPAMYHPTS1Z0QEQZ8AT1
+            cost: 30259678
+            path: contracts/base/TokenFungible.clar
             anchor-block-only: true
-            clarity-version: 1
-      epoch: "2.05"
+            clarity-version: 2
+      epoch: "2.4"
