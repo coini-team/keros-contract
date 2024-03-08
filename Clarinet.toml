@@ -1,9 +1,8 @@
 [project]
-name = 'keros-contract'
-description = ''
+name = "keros-contract"
 authors = []
+description = ""
 telemetry = true
-cache_dir = './.cache'
 
 [[project.requirements]]
 contract_id = 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard'
@@ -12,12 +11,13 @@ path = 'contracts/base/fungibletoken.clar'
 clarity_version = 2
 epoch = 2.4
 
+
 [repl]
-clarity_wasm_mode = false
-show_timings = false
+costs_version = 2
+parser_version = 2
 
 [repl.analysis]
-passes = ['check_checker']
+passes = ["check_checker"]
 
 [repl.analysis.check_checker]
 strict = false
