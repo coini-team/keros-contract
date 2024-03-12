@@ -51,7 +51,7 @@
 (define-public (mint (amount uint) (recipient principal))
   (begin
     (asserts! (is-eq tx-sender CONTRACT_OWNER) ERR_OWNER_ONLY)
-    (ft-mint? clarity-coin amount recipient)
+    (ft-mint? keros-coin amount recipient)
   )
 )
 
@@ -66,7 +66,7 @@
   (begin
     ;; #[filter(amount, recipient)]
     (asserts! (is-eq tx-sender sender) ERR_NOT_TOKEN_OWNER)
-    (try! (ft-transfer? clarity-coin amount sender recipient))
+    (try! (ft-transfer? keros-coin amount sender recipient))
     (match memo to-print (print to-print) 0x)
     (ok true)
   )

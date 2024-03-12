@@ -6,10 +6,12 @@ telemetry = true
 cache_dir = '.cache'
 
 [[project.requirements]]
-contract_id = "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait"
+contract_id = 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait'
 
-[contracts.non-fungible-token]
-path = "contracts/base/non-fungible-token.clar"
+[[project.requirements]]
+contract_id = 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard'
+[contracts.fungible-token]
+path = 'contracts/base/fungible-token.clar'
 clarity_version = 2
 epoch = 2.4
 
