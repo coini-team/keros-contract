@@ -1,5 +1,5 @@
 ;; This contract implements the SIP-010 community-standard Fungible Token trait.
-(impl-trait 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.sip-010-trait)
+(impl-trait 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.sip-010-traitget)
 
 ;; Define the FT, with no maximum supply
 (define-fungible-token keros-coin)
