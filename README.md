@@ -14,6 +14,9 @@ clarinet console
 ```
 clarinet deployment generate --testnet --low-cost
 ```
+```
+clarinet deployment generate --testnet --manual-cost
+```
 
 ### Complete deployment
 ```
